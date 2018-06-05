@@ -1,6 +1,6 @@
 # euclid_phz_testing
 
-This repositiory contains set of tools to run and analyse Euclid photo-z data challenges.
+This repositiory contains a set of tools to run and analyse Euclid photo-z data challenges.
 
 ## photoz_metrics.py
 
