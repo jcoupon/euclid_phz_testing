@@ -548,7 +548,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        'task', help='Metric to compute and plot [scatter, ]')
+        'task', help='Metric to compute and plot [scatter, PDF]')
     parser.add_argument('-i', '--input',  default=None, help='input file')
     parser.add_argument(
         '-o', '--output', default='graph.pdf', help='output file')
@@ -566,11 +566,11 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '-title', default='',
-        help='title (Default: None)')
+        help='title (default: None)')
 
     parser.add_argument(
         '-select', default=None,
-        help='selection string (Default: None)')
+        help='selection string (default: None)')
 
     parser.add_argument(
         '-density', action='store_true',
@@ -582,7 +582,7 @@ if __name__ == "__main__":
     z_bins_string = ",".join(map(str, BINS_TOMO))
     parser.add_argument(
         '-z_bins', default=z_bins_string,
-        help='redshift bins for PDF analysis. Default: {}'.format(z_bins_string))
+        help='redshift bins for PDF analysis (default: {})'.format(z_bins_string))
 
     args = parser.parse_args()
 
