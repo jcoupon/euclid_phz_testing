@@ -4,7 +4,7 @@ This repositiory contains set of tools to run and analyse Euclid photo-z data ch
 
 ## photoz_metrics.py
 
-```bash
+```
 
 usage: photoz_metrics.py [-h] [-i INPUT] [-o OUTPUT] [-input_type INPUT_TYPE]
                          [-zmin ZMIN] [-zmax ZMAX] [-title TITLE]
