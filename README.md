@@ -2,9 +2,10 @@
 
 This repositiory contains set of tools to run and analyse Euclid photo-z data challenges.
 
-## photoz_metrics
+## photoz_metrics.py
 
-'''
+```python
+
 usage: photoz_metrics.py [-h] [-i INPUT] [-o OUTPUT] [-input_type INPUT_TYPE]
                          [-zmin ZMIN] [-zmax ZMAX] [-title TITLE]
                          [-select SELECT] [-density]
@@ -31,4 +32,4 @@ optional arguments:
                         stats output file
   -z_bins Z_BINS        redshift bins for PDF analysis. Default:
                         0.2,0.45,0.55,0.7,0.8,0.9,1.0,1.15,1.35,1.65,2.0
-'''
+```
