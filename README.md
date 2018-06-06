@@ -37,7 +37,7 @@ optional arguments:
 
 ## simulate.py
 
-Script to simulate the flux and flux errors, given AB magnitude depths and sky backgrounds.
+Script to simulate fluxes and flux errors, given AB magnitude depths and sky backgrounds.
 
 ```
 usage: simulate.py [-h] [-i INPUT] [-o OUTPUT] [-seed SEED] [-r_ref R_REF]
