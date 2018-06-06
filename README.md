@@ -52,7 +52,7 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         output file
   -seed SEED            random seed
-  -r_ref R_REF          reference size in which depths are defined
+  -r_ref R_REF          reference source size on the sky in which depths are defined
   -filter_names FILTER_NAMES
                         filter names
   -filter_skies_AB FILTER_SKIES_AB

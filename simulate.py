@@ -102,7 +102,7 @@ def compute_err(f, f_err_bgk_ref, r, r_ref, sky_AB):
     INPUT:
     - f_err_bgk_ref: the background flux error
     for typical Euclid galaxies
-    - r_ref: is the typical size of Euclid galaxies
+    - r_ref: is the typical size of sources
     - sky_AB is the AB magnitude of the
     background per arcsec^{-2}
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     parser.add_argument('-seed', default=None, type=int, help='random seed')
     parser.add_argument(
         '-r_ref', default=None, type=float,
-        help='reference size in which depths are defined')
+        help='reference source size on the sky in which depths are defined')
 
     parser.add_argument(
         '-filter_names', default=None, type=str, help='filter names')
