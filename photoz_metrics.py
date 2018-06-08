@@ -271,7 +271,7 @@ def plot_bias(
         color='blue', alpha=0.3, label='Euclid requirement')
 
     ax.set_xlabel(r'$z$')
-    ax.set_ylabel(r'$\Delta z_\mathrm{var}$')
+    ax.set_ylabel(r'$\Delta z$')
 
     ax.errorbar(
         z_bins_center, dz, yerr=dz_err, marker='o')
