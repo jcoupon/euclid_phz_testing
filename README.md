@@ -14,7 +14,8 @@ usage: photoz_metrics.py [-h] [-i INPUT] [-o OUTPUT] [-input_type INPUT_TYPE]
                          task
 
 positional arguments:
-  task                  Metric to compute and plot [scatter, PDF]
+  task                  Metric to compute and plot. [scatter, nz_bins, PDF,
+                        bias, all]
 
 optional arguments:
   -h, --help            show this help message and exit

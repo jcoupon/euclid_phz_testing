@@ -316,6 +316,7 @@ def plot_PDF(
     if file_output is not None:
         pp = PdfPages(file_output)
 
+
     # stats
     zmin = np.zeros(z_bins_N)
     zmax = np.zeros(z_bins_N)
@@ -354,7 +355,8 @@ def plot_PDF(
             # fig.set_tight_layout(True)
         fig.subplots_adjust(wspace=0.4)
         fig.suptitle(title+'${0:.2f}<z<{1:.2f}$'.format(zmin[i], zmax[i]))
-        pp.savefig()
+        if pp is not None:
+            pp.savefig()
 
     if stat_file_output is not None:
         stats = collections.OrderedDict()
