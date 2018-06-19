@@ -38,7 +38,8 @@ optional arguments:
 
 ## simulate.py
 
-Script to simulate fluxes and flux errors, given AB magnitude depths and sky backgrounds.
+Script to simulate fluxes and flux errors, given AB magnitude
+depths and sky backgrounds.
 
 ```
 usage: simulate.py [-h] [-i INPUT] [-o OUTPUT] [-seed SEED] [-r_ref R_REF]
@@ -62,3 +63,25 @@ optional arguments:
                         filter depths (AB)
   -repeat REPEAT        Number of repetitions
   ```
+
+## simulate_from_inst.py
+
+Script to simulate fluxes and flux errors, given AB magnitude
+depths and sky backgrounds, from true instrumental
+characteristics.
+
+
+```
+usage: simu_obs.py [-h] [-i INPUT] [-o OUTPUT] [-seed SEED] option
+
+positional arguments:
+  option                Which action
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input file(s)
+  -o OUTPUT, --output OUTPUT
+                        output file(s)
+  -seed SEED            Random seed. Default: 20091982
+```
