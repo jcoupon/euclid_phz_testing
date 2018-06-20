@@ -85,3 +85,63 @@ optional arguments:
                         output file(s)
   -seed SEED            Random seed. Default: 20091982
 ```
+
+## get_dust_corr.py
+
+script to load dust map and get extinction value and/or apply corrections.
+
+Some typical coefficients useful for Euclid:
+
+MegaCam-uS: 4.018
+
+MegaCam-u: 4.138
+
+HSC-G: 3.258
+
+HSC-R: 2.286
+
+HSC-I: 1.641
+
+HSC-Z: 1.264
+
+HSC-Y: 1.081
+
+DECam-G:3.687
+
+DECam-R:2.499
+
+DECam-I:1.873
+
+VIS: 1.780
+
+DECam-Z:1.399
+
+VISTA-Y:1.167
+
+VISTA-J:0.965
+
+VISTA-H:0.637
+
+
+```
+usage: get_dust_corr.py [-h] [-c COLUMNS] [-s SOUTHFILE] [-n NORTHFILE]
+                        [-band BAND] [-coef COEF] [-correct] [-add_corr]
+                        input output
+
+positional arguments:
+  input                 input file
+  output                output file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c COLUMNS, --columns COLUMNS
+                        Names of coordinates colums (default: ra,dec)
+  -s SOUTHFILE, --southFile SOUTHFILE
+                        Dust map (south galactic)
+  -n NORTHFILE, --northFile NORTHFILE
+                        Dust map (north galactic)
+  -band BAND            List of bands to correct the extinction for
+  -coef COEF            Corresponding Albda/E(B-V) (in mags)
+  -correct              Correct fluxes for extinction
+  -add_corr             Add flux correction factor for extinction
+```
