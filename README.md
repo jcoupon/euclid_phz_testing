@@ -93,34 +93,20 @@ script to load dust map and get extinction value and/or apply corrections.
 Some typical coefficients useful for Euclid:
 
 MegaCam-uS: 4.018
-
 MegaCam-u: 4.138
-
 HSC-G: 3.258
-
 HSC-R: 2.286
-
 HSC-I: 1.641
-
 HSC-Z: 1.264
-
 HSC-Y: 1.081
-
-DECam-G:3.687
-
-DECam-R:2.499
-
-DECam-I:1.873
-
+DECam-G: 3.687
+DECam-R: 2.499
+DECam-I: 1.873
 VIS: 1.780
-
-DECam-Z:1.399
-
-VISTA-Y:1.167
-
-VISTA-J:0.965
-
-VISTA-H:0.637
+DECam-Z: 1.399
+VISTA-Y: 1.167
+VISTA-J: 0.965
+VISTA-H: 0.637
 
 
 ```
