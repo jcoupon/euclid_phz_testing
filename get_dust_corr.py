@@ -45,9 +45,8 @@ def main(args):
 
     N = len(data)
 
-    # ra = data['RA']
-    # dec = data['DEC']
-
+    ra = data[ra_name]
+    dec = data[dec_name]
 
     EB_V = np.zeros(N)
     x = np.zeros(N)
