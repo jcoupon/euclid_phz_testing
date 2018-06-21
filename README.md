@@ -107,6 +107,7 @@ Some typical coefficients useful for Euclid:
 * VISTA-Y: 1.167
 * VISTA-J: 0.965
 * VISTA-H: 0.637
+* VISTA-Ks: 0.335
 
 
 ```
