@@ -701,7 +701,7 @@ def read_data(
         # eliminate non-finite estimates
         finite = np.isfinite(z_median)
 
-        z_median[finite]
+        z_median = z_median[finite]
         data = data[finite]
         PDF = PDF[finite]
 
@@ -732,7 +732,7 @@ def read_data(
 
     result = {}
     for c in col_names:
-        result[c] = data[col_names[c]]
+        result[c] = data[col_names[c]].data
 
     result['z'] = z_median
     result['PDF'] = PDF
