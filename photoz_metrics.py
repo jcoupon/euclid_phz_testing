@@ -685,24 +685,28 @@ def read_data(
 
         # column name mapping
         col_names = {
-            'z' : 'TrueRedshiftPDZ_50',
-            'z_ref' : 'z_true'
+            'z_ref' : 'z_true',
+            'vis_mag' : 'vis_obs_mag'
         }
 
         # read data into astropy table format
         data = Table.read(file_input, hdu=1)
 
+        # read redshift estimates
+        z_median = data['REDSHIFT_PDF_QUANTILES'].data[:,1]
+
         # read PDFs
-        PDF = data['TrueRedshiftPDZ'].data
+        PDF = data['REDSHIFT_PDF'].data
 
         # eliminate non-finite estimates
-        finite = np.isfinite(data['TrueRedshiftPDZ_50'])
+        finite = np.isfinite(z_median)
 
+        z_median[finite]
         data = data[finite]
         PDF = PDF[finite]
 
         # PDF bins
-        PDF_bins = Table.read(file_input, hdu=2)['Redshift'].data
+        PDF_bins = Table.read(file_input, hdu=2)['BINS_PDF'].data
 
     else:
         raise ValueError(
@@ -730,6 +734,7 @@ def read_data(
     for c in col_names:
         result[c] = data[col_names[c]]
 
+    result['z'] = z_median
     result['PDF'] = PDF
     result['PDF_bins'] = PDF_bins
 
@@ -877,5 +882,8 @@ if __name__ == "__main__":
             z_bins_string))
 
     args = parser.parse_args()
+
+    if args.select == '':
+        args.select = None
 
     main(args)
