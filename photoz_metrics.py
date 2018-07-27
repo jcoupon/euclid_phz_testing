@@ -712,12 +712,15 @@ def read_data(
 
         # column name mapping
         col_names = {
-            'z' : 'TrueRedshiftPDZ_50',
-            'z_ref' : 'z_true'
+            'z_ref' : 'z_true',
+            'vis_mag' : 'vis_obs_mag'
         }
 
         # read data into astropy table format
         data = Table.read(file_input, hdu=1)
+
+        # read redshift estimates
+        z_median = data['TrueRedshiftPDZ_50']
 
         # read PDFs
         PDF = data['TrueRedshiftPDZ'].data
