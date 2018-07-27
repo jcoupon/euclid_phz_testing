@@ -657,8 +657,8 @@ def get_stats(x, y, bins):
             bias[i] = np.median(dist)
 
     result = collections.OrderedDict()
-    result['zmin'] = bins[:-1]
-    result['zmax'] = bins[1:]
+    result['zmin'] = np.array(bins[:-1])
+    result['zmax'] = np.array(bins[1:])
     result['N'] = N
     result['sigma'] = sigma
     result['eta'] = eta
@@ -708,7 +708,31 @@ def read_data(
         # PDF bins
         PDF_bins = Table.read(file_input, hdu=2)['BINS_PDF'].data
 
+    elif input_type == 'ECLD_PHZ_OLD':
+
+        # column name mapping
+        col_names = {
+            'z' : 'TrueRedshiftPDZ_50',
+            'z_ref' : 'z_true'
+        }
+
+        # read data into astropy table format
+        data = Table.read(file_input, hdu=1)
+
+        # read PDFs
+        PDF = data['TrueRedshiftPDZ'].data
+
+        # eliminate non-finite estimates
+        finite = np.isfinite(data['TrueRedshiftPDZ_50'])
+
+        data = data[finite]
+        PDF = PDF[finite]
+
+        # PDF bins
+        PDF_bins = Table.read(file_input, hdu=2)['Redshift'].data
+
     else:
+
         raise ValueError(
             'read_data: input type {} is not recognised.'.format(
                 input_type))
