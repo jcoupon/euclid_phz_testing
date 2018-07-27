@@ -685,8 +685,8 @@ def read_data(
 
         # column name mapping
         col_names = {
-            'z_ref' : 'z_true',
-            'vis_mag' : 'vis_obs_mag'
+            'z_ref' : 'z_true'
+            # TODO 'vis_mag' : 'vis_obs_mag'
         }
 
         # read data into astropy table format
