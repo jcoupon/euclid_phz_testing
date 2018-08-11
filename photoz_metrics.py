@@ -13,7 +13,7 @@ import re
 import collections
 
 import matplotlib
-matplotlib.use('agg')
+# matplotlib.use('agg')
 import matplotlib.pyplot as plt
 
 from scipy import interpolate
@@ -58,11 +58,10 @@ def main(args):
     # dist = Gaussian(bins, 2.0, sigma) #+Gaussian(bins, 2.5, sigma*2.0)
 
     rc('font',**{'size': 25, 'family':'serif', 'serif':['Palatino']})
-    rc('text', usetex=True)
+    # rc('text', usetex=True)
 
     # redshift bins
     z_bins = [float(s) for s in args.z_bins.split(",")]
-
 
     # read data
     data = read_data(
@@ -146,6 +145,7 @@ def main(args):
     print_message('Done\n')
 
     return
+
 
 """
 
