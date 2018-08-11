@@ -57,7 +57,7 @@ def main(args):
     # bins = np.linspace(-10.0, 10.0, 100)
     # dist = Gaussian(bins, 2.0, sigma) #+Gaussian(bins, 2.5, sigma*2.0)
 
-    rc('font',**{'size': 25, 'family':'serif', 'serif':['Palatino']})
+    # rc('font',**{'size': 25, 'family':'serif', 'serif':['Palatino']})
     # rc('text', usetex=True)
 
     # redshift bins
@@ -403,13 +403,21 @@ def plot_scatter(
 
     # scatter plot
     if density:
-        hh, locx, locy = np.histogram2d(
-            z_ref, z, range=[[zmin, zmax],[zmin, zmax]], bins=[150, 150])
-        hh[hh == 0.0] = np.nan
-        ax.imshow(
-            np.log(hh.T), origin="lower", cmap='Blues',
-            extent=np.array([[zmin, zmax],[zmin, zmax]]).flatten(),
-            aspect='auto', interpolation="nearest")
+
+        hb = ax.hexbin(
+            z_ref, z,
+            gridsize=100, cmap='Blues',
+            mincnt=1, bins='log',
+            edgecolors=None, extent=np.array([[zmin, zmax],[zmin, zmax]]).flatten())
+        #, extent=np.array([[zmin, zmax],[zmin, zmax]]))
+
+        #hh, locx, locy = np.histogram2d(
+        #    z_ref, z, range=[[zmin, zmax],[zmin, zmax]], bins=[150, 150])
+        #hh[hh == 0.0] = np.nan
+        #ax.imshow(
+        #    np.log(hh.T), origin="lower", cmap='Blues',
+        #    extent=np.array([[zmin, zmax],[zmin, zmax]]).flatten(),
+        #    aspect='auto', interpolation="nearest")
     else:
         ax.scatter(
             z_ref, z, s=0.05,
