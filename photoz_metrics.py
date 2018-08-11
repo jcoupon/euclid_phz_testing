@@ -66,7 +66,10 @@ def main(args):
 
     # read data
     data = read_data(
-        args.input, input_type=args.input_type, select=args.select)
+        args.input, input_type=args.input_type,
+        select=args.select, check_norm=args.check_norm,
+        normalise=args.normalise,
+        reject_outliers=args.reject_outliers)
 
     # loop over tasks
     print_message('Plotting...')
@@ -668,7 +671,9 @@ def get_stats(x, y, bins):
 
 
 def read_data(
-    file_input, input_type='ECLD_PHZ', select=None):
+    file_input, input_type='ECLD_PHZ',
+    select=None, check_norm=False,
+    normalise=False, reject_outliers=False):
     """ Read data and return data dictionary.
     Input types:
         - ECLD_PHZ: Euclid PHZ data model
@@ -741,6 +746,7 @@ def read_data(
                 input_type))
     print_message('Done\n')
 
+
     # apply selection
     if select is not None:
         cmd = ''
@@ -753,9 +759,71 @@ def read_data(
         select_array = eval(cmd)
 
         print_message('Applying selection: '+cmd+'\n')
+        data = data[select_array]
+        PDF = PDF[select_array]
+        z_median = z_median[select_array]
+
+
+    # Re-normalise PDFs
+    if normalise:
+        print_message('Renormalising PDFs...')
+        for p in PDF:
+            norm = trapz_boundaries(PDF_bins, PDF_bins*p, 0.0, 10.0)
+            p /= norm
+        print_message('Done\n')
+    # or else pick a small number of PDF and check
+    # it is normalised, throw an
+    # exception otherwise
+    else:
+        if check_norm:
+            N_sample = 10
+            print_message('Checking normalisation using {} random PDFs...'.format(N_sample))
+            for p in PDF[np.random.randint(len(PDF), size=N_sample)]:
+                norm = trapz_boundaries(PDF_bins, PDF_bins*p, 0.0, 10.0)
+                try:
+                    np.testing.assert_almost_equal(norm, 1.0)
+                except:
+                    raise Exception('PDFs do not seem to be normalised. \
+You may want to set \'-normalised\'\n')
+
+            print_message('PDFs seem to be normalised.\n')
+
+    # apply outlier rejection
+    if reject_outliers:
+        N_in = len(data)
+        select_array = [True]*N_in
+        print_message('Rejecting potential outliers...')
+        for i, p in enumerate(PDF):
+            if False:
+                mean = np.trapz(PDF_bins*p, PDF_bins)
+                std_dev = np.sqrt(np.trapz((PDF_bins-mean)**2.0*p, PDF_bins))
+                if std_dev > 0.3*(1.0+mean):
+                    select_array[i] = False
+            if False:
+                # mode = PDF_bins[np.argmax(p)]
+                mode = z_median[i]
+                z_99 = 0.3*(1.0+mode)
+                low = max(0.0, mode-z_99)
+                high = min(mode+z_99, PDF_bins[-1])
+
+                f_15 = trapz_boundaries(PDF_bins, p, low, high)
+                if f_15 < 0.9:
+                    select_array[i] = False
+            if True:
+                x = sample_from_dist(PDF_bins, p, N=1000)
+                mean = np.mean(x)
+                if np.std(x) > 2.0*0.15*(1.0+mean):
+                     select_array[i] = False
+
 
         data = data[select_array]
         PDF = PDF[select_array]
+        z_median = z_median[select_array]
+
+        N_out = len(data)
+        print_message('Done (rejected {0}/{1} PDFs ({2}%).\n'.format(
+            N_in-N_out, N_in, (N_in-N_out)/N_in*100.0))
+
 
     result = {}
     for c in col_names:
@@ -837,15 +905,14 @@ def sample_from_dist(x, f, N=1, q=None):
         else:
             return inv_cum_y(np.random.rand(N))
 
-def int_trapz(x, y, a, b):
-    """ return the integrated value between a and b
-    use the trapeze rule
-    """
-
-    int_range = np.linspace(a, b, num=1000)
-    f = np.interp(int_range, x, y)
-    return np.sum(np.diff(int_range) * (f[:-1]+f[1:])/2.0)
-
+# def int_trapz(x, y, a, b):
+#    """ return the integrated value between a and b
+#    use the trapeze rule
+#    """
+#
+#    int_range = np.linspace(a, b, num=1000)
+#    f = np.interp(int_range, x, y)
+#    return np.sum(np.diff(int_range) * (f[:-1]+f[1:])/2.0)
 
 
 def median_dist(x, y):
@@ -907,6 +974,25 @@ if __name__ == "__main__":
         '-z_bins', default=z_bins_string,
         help='redshift bins for PDF analysis (default: {})'.format(
             z_bins_string))
+
+    parser.add_argument(
+        '-check_norm', dest='check_norm', action='store_true',
+        help='Check PDF normalisation by picking a random sample \
+(not done if normalise=True)')
+
+    parser.add_argument(
+        '-not_check_norm', dest='check_norm', action='store_false',
+        help='Do not check PDF normalisation')
+    parser.set_defaults(check_norm=False)
+
+    parser.add_argument(
+        '-normalise',  action='store_true',
+        help='Normalise the PDFs', default=False)
+
+    parser.add_argument(
+        '-reject_outliers',  action='store_true',
+        help='Reject PDFs with std > 0.3', default=False)
+
 
     args = parser.parse_args()
 
